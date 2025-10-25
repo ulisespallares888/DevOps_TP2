@@ -1,0 +1,74 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops_tp1_api_db
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend_net
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: redis-cache
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend_net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./API
+    container_name: spring-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker-compose
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+    networks:
+      - backend_net
+
+  frontend:
+    build:
+      context: webpage
+    container_name: react-frontend
+    depends_on:
+      - backend
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    networks:
+      - frontend_net
+      - backend_net
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  frontend_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
