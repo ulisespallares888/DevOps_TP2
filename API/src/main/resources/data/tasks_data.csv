@@ -1,0 +1,21 @@
+"title","description","completed"
+"Revisar emails","Revisar y responder correos importantes del día.",true
+"Actualizar reporte semanal","Completar y enviar el reporte de avances semanales.",false
+"Reunión de equipo","Coordinar y asistir a la reunión de seguimiento del proyecto.",false
+"Analizar métricas","Revisar métricas de rendimiento y preparar un resumen.",false
+"Planificación sprint","Definir tareas y objetivos para el próximo sprint.",false
+"Implementar login JWT","Crear el endpoint de autenticación con JWT en el backend.",false
+"Revisar pull requests","Analizar y aprobar o comentar PRs pendientes en GitHub.",false
+"Optimizar base de datos","Mejorar consultas y rendimiento de la base de datos.",false
+"Documentar API","Redactar documentación actualizada para los endpoints.",true
+"Test unitarios","Escribir y ejecutar pruebas unitarias de los nuevos métodos.",true
+"Configurar Docker","Crear y revisar contenedores Docker para los microservicios.",false
+"Revisar logs del servidor","Analizar errores recientes y generar reporte de incidencias.",false
+"Actualizar dependencias","Actualizar librerías y dependencias del proyecto.",true
+"Configurar CI/CD","Revisar pipeline de Jenkins y asegurar ejecución correcta.",true
+"Evaluar nuevas librerías","Investigar librerías que puedan mejorar la aplicación.",true
+"Capacitación interna","Preparar sesión de capacitación sobre Spring Boot.",false
+"Analizar feedback clientes","Revisar comentarios y sugerencias de usuarios.",false
+"Crear mockups UI","Diseñar prototipos de la interfaz para nuevas funcionalidades",true
+"Revisar seguridad API","Verificar vulnerabilidades y posibles mejoras de seguridad.",false
+"Preparar demo funcional","Configurar demo para presentar a stakeholders.",true
