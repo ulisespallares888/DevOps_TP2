@@ -126,6 +126,12 @@
 			<version>8.14.0</version>
 		</dependency>
 
+        <!-- Flayway -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>11.7.2</version>
+        </dependency>
 
 	</dependencies>
 

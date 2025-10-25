@@ -1,0 +1,4 @@
+-- V2__alter_table_tasks.sql
+ALTER TABLE tasks
+    ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN completed_at DATETIME NULL;
