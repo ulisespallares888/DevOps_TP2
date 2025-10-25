@@ -15,12 +15,16 @@ public interface MapperTask {
     @Mapping(target = "title", source = "title")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "completed", constant = "false")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "completedAt", ignore = true)
     Task taskRequestDTOToTask(TaskRequestDTO taskRequestDTO);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "title", source = "title")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "completed", source = "completed")
+    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "completedAt", source = "completedAt")
     TaskResponseDTO taskToTaskResponseDTO(Task task);
 
     @Mapping(target = "title", source = "title")
