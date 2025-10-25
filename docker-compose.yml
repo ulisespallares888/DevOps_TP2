@@ -5,7 +5,7 @@ services:
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: devops_tp1_api_db
+      MYSQL_DATABASE: devops_tp2_api_db
     ports:
       - '3306:3306'
     volumes:
