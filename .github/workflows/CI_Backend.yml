@@ -21,7 +21,7 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: devops_tp1_api_db_test
+          MYSQL_DATABASE: devops_tp2_api_db_test
         ports:
           - 3306:3306
         options: >-
@@ -67,7 +67,7 @@ jobs:
 
       - name: Run Tests
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/devops_tp1_api_db_test
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/devops_tp2_api_db_test
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
           SPRING_REDIS_HOST: 127.0.0.1
