@@ -91,8 +91,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp_backend:${{ github.sha }}  ./API
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp_backend:${{ github.run_number }}-${{ github.sha }}  ./API
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/myapp_backend:${{ github.sha }} 
+          docker push ${{ secrets.DOCKER_USERNAME }}/myapp_backend:${{ github.run_number }}-${{ github.sha }} 
