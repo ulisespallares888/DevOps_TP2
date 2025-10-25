@@ -1,6 +1,9 @@
 package com.TP1.API.v1.config;
 
+class RateLimitFilter{
+}
 
+/*
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
@@ -65,3 +68,5 @@ public class RateLimitFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+
+ */
