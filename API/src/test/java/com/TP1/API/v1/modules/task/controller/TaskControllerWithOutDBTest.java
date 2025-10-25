@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -35,8 +37,8 @@ class TaskControllerWithOutDBTest {
     void getAllTasksTest() throws Exception {
         when(taskService.findAll(any(Pageable.class)))
                 .thenReturn(new PageDTO<>(List.of(
-                        new TaskResponseDTO(1L, "Task 1", "Description 1", false),
-                        new TaskResponseDTO(2L, "Task 2", "Description 2", true)
+                        new TaskResponseDTO(1L, "Task 1", "Description 1", false, LocalDateTime.now(), null),
+                        new TaskResponseDTO(2L, "Task 2", "Description 2", true, LocalDateTime.now(), LocalDateTime.now())
                 ), 0, 10, 2));
 
         mockMvc.perform(get("/api/v1/tasks"))
@@ -48,8 +50,8 @@ class TaskControllerWithOutDBTest {
         Pageable pageable = PageRequest.of(0, 10);
         when(taskService.findAllByTitleOrDescription(any(Pageable.class), any(String.class)))
                 .thenReturn(new PageDTO<>(List.of(
-                        new TaskResponseDTO(1L, "Task 1", "Description 1", false),
-                        new TaskResponseDTO(2L, "Task 2", "Description 2", true)
+                        new TaskResponseDTO(1L, "Task 1", "Description 1", false, LocalDateTime.now(), null),
+                        new TaskResponseDTO(2L, "Task 2", "Description 2", true, LocalDateTime.now(), LocalDateTime.now())
                 ), 0, 10, 2));
 
         mockMvc.perform(get("/api/v1/tasks/search")
@@ -62,7 +64,7 @@ class TaskControllerWithOutDBTest {
 
     @Test
     void createTaskTest() throws Exception {
-        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "New Task", "New Description", false);
+        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "New Task", "New Description", false, LocalDateTime.now(), null);
 
         // Mockeamos el servicio
         when(taskService.create(any())).thenReturn(taskResponseDTO);
@@ -88,7 +90,7 @@ class TaskControllerWithOutDBTest {
     @Test
     void getTaskByIdTest() throws Exception {
         when(taskService.findById(1L))
-                .thenReturn(new TaskResponseDTO(1L, "Task 1", "Description 1", false));
+                .thenReturn(new TaskResponseDTO(1L, "Task 1", "Description 1", false, LocalDateTime.now(), null));
 
         mockMvc.perform(get("/api/v1/tasks/1"))
                 .andExpect(status().isOk());
@@ -106,7 +108,7 @@ class TaskControllerWithOutDBTest {
 
     @Test
     void completeTaskTest() throws Exception {
-        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "Task 1", "Description 1", true);
+        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "Task 1", "Description 1", true, LocalDateTime.now(), LocalDateTime.now());
 
         // Mockeamos el servicio
         when(taskService.completeTask(1L, true)).thenReturn(taskResponseDTO);
@@ -124,7 +126,7 @@ class TaskControllerWithOutDBTest {
 
     @Test
     void updateTaskTest() throws Exception {
-        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "Updated Task", "Updated Description", false);
+        TaskResponseDTO taskResponseDTO = new TaskResponseDTO(1L, "Updated Task", "Updated Description", false, LocalDateTime.now(), null);
 
         // Mockeamos el servicio
         when(taskService.update(any(Long.class), any())).thenReturn(taskResponseDTO);

@@ -12,6 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,9 +33,16 @@ class TaskControllerWithDBTest {
     @Test
     @Rollback
     void getAllTasksIntegrationTest() throws Exception {
-        Task task1 = taskRepository.save(new Task(null, "Task 1", "Description 1", false));
-        Task task2 = taskRepository.save(new Task(null, "Task 2", "Description 2", true));
-
+        Task task1 = taskRepository.save(Task.builder()
+                .title("Task 1")
+                .description("Description 1")
+                .completed(false)
+                .build());
+        Task task2 = taskRepository.save(Task.builder()
+                .title("Task 2")
+                .description("Description 2")
+                .completed(true)
+                .build());
 
         mockMvc.perform(get("/api/v1/tasks"))
                 .andExpect(status().isOk())
@@ -65,7 +74,11 @@ class TaskControllerWithDBTest {
     @Test
     @Rollback
     void completeTaskIntegrationTest() throws Exception {
-        Task task = taskRepository.save(new Task(null, "Task 1", "Description 1", false));
+        Task task = taskRepository.save(Task.builder()
+                .title("Task")
+                .description("Description")
+                .completed(false)
+                .build());
 
         mockMvc.perform(put("/api/v1/tasks/" + task.getId() + "/complete")
                         .param("completed", "true"))
@@ -76,7 +89,11 @@ class TaskControllerWithDBTest {
     @Test
     @Rollback
     void deleteTaskIntegrationTest() throws Exception {
-        Task task = taskRepository.save(new Task(null, "Task to Delete", "Description", false));
+        Task task = taskRepository.save(Task.builder()
+                .title("Task")
+                .description("Description")
+                .completed(false)
+                .build());
 
         mockMvc.perform(delete("/api/v1/tasks/" + task.getId()))
                 .andExpect(status().isNoContent());
@@ -85,7 +102,11 @@ class TaskControllerWithDBTest {
     @Test
     @Rollback
     void getTaskByIdIntegrationTest() throws Exception {
-        Task task = taskRepository.save(new Task(null, "Task 1", "Description 1", false));
+        Task task = taskRepository.save(Task.builder()
+                .title("Task")
+                .description("Description")
+                .completed(false)
+                .build());
 
         mockMvc.perform(get("/api/v1/tasks/" + task.getId()))
                 .andExpect(status().isOk())
@@ -97,7 +118,11 @@ class TaskControllerWithDBTest {
     @Test
     @Rollback
     void updateTaskIntegrationTest() throws Exception {
-        Task task = taskRepository.save(new Task(null, "Old Task", "Old Description", false));
+        Task task = taskRepository.save(Task.builder()
+                .title("Task")
+                .description("Description")
+                .completed(false)
+                .build());
 
         mockMvc.perform(put("/api/v1/tasks/" + task.getId())
                         .contentType(MediaType.APPLICATION_JSON)
