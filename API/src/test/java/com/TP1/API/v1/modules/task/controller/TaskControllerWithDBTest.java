@@ -110,8 +110,8 @@ class TaskControllerWithDBTest {
 
         mockMvc.perform(get("/api/v1/tasks/" + task.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Task 1"))
-                .andExpect(jsonPath("$.description").value("Description 1"))
+                .andExpect(jsonPath("$.title").value("Task"))
+                .andExpect(jsonPath("$.description").value("Description"))
                 .andExpect(jsonPath("$.completed").value(false));
     }
 
