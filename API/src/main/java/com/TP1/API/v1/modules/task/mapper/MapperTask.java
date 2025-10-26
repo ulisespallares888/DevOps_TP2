@@ -8,9 +8,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Mapper
 public interface MapperTask {
     MapperTask INSTANCIA = Mappers.getMapper(MapperTask.class);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Mapping(target = "title", source = "title")
     @Mapping(target = "description", source = "description")
@@ -23,8 +28,8 @@ public interface MapperTask {
     @Mapping(target = "title", source = "title")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "completed", source = "completed")
-    @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "completedAt", source = "completedAt")
+    @Mapping(target = "createdAt", expression = "java(formatDate(task.getCreatedAt()))")
+    @Mapping(target = "completedAt", expression = "java(formatDate(task.getCompletedAt()))")
     TaskResponseDTO taskToTaskResponseDTO(Task task);
 
     @Mapping(target = "title", source = "title")
@@ -32,4 +37,7 @@ public interface MapperTask {
     @Mapping(target = "completed", source = "completed")
     Task taskRequestDTOUpdateToTask(TaskRequestDTOUpdate TaskRequestDTOUpdate);
 
+    default String formatDate(LocalDateTime dateTime) {
+        return dateTime != null ? dateTime.format(formatter) : null;
+    }
 }

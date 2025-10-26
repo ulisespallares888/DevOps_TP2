@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -43,13 +44,25 @@ public class TaskBootstrap implements CommandLineRunner {
             if (taskRepository.count() < 20) {
                 log.info("Loading database with tasks");
                 for (TaskRecordDTO taskRecordDTO : taskRecordDTOS) {
-                    taskRepository.save(
-                            Task.builder()
-                                    .title(taskRecordDTO.getTitle())
-                                    .description(taskRecordDTO.getDescription())
-                                    .completed(taskRecordDTO.isCompleted())
-                                    .build()
-                    );
+                    if (taskRecordDTO.isCompleted()){
+                        taskRepository.save(
+                                Task.builder()
+                                        .title(taskRecordDTO.getTitle())
+                                        .description(taskRecordDTO.getDescription())
+                                        .completed(taskRecordDTO.isCompleted())
+                                        .createdAt(taskRecordDTO.getCreatedAt())
+                                        .completedAt(LocalDateTime.now())
+                                        .build());
+                    }else{
+                        taskRepository.save(
+                                Task.builder()
+                                        .title(taskRecordDTO.getTitle())
+                                        .description(taskRecordDTO.getDescription())
+                                        .completed(taskRecordDTO.isCompleted())
+                                        .createdAt(taskRecordDTO.getCreatedAt())
+                                        .completedAt(taskRecordDTO.getCompletedAt())
+                                        .build());
+                    }
                     log.info("Task '{}' saved.", taskRecordDTO.getTitle());
                 }
             } else {
