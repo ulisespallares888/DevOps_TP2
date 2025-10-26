@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,10 +108,13 @@ public class TaskServiceImpl implements ITaskService {
     public TaskResponseDTO completeTask(Long id, boolean completed) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task no found with ID = %s".formatted(id)));
-
+        if (completed) {
+            task.setCompletedAt(LocalDateTime.now());
+        } else {
+            task.setCompletedAt(null);
+        }
         task.setCompleted(!task.isCompleted());
 
-        //task.setCompleted(completed);
         taskRepository.save(task);
         return MapperTask.INSTANCIA.taskToTaskResponseDTO(task);
     }
